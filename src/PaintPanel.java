@@ -1,14 +1,19 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 
 public class PaintPanel extends JPanel {
 	GraphEnum option;//denote the which button is pressed down
@@ -26,7 +31,7 @@ public class PaintPanel extends JPanel {
 		addKeyListener(new InputListener());
 		
 		setFocusable(true);
-		option = GraphEnum.Line;//for test
+		option = GraphEnum.Arrow;//for test
 	}
 	
 	//paint graphs
@@ -211,4 +216,101 @@ public class PaintPanel extends JPanel {
 	{
 		status=statusIn;
 	}
+	public void openFile(File f) {
+		try{
+			Scanner input =new Scanner(f);
+			String type;
+			graphList.clear();
+			while(input.hasNext()){
+				type=input.next();
+				if (type.equals("Line")) {
+					GraphObject.Line tmpLine = new GraphObject.Line();
+					tmpLine.x0=input.nextInt();
+					tmpLine.y0=input.nextInt();
+					tmpLine.x1=input.nextInt();
+					tmpLine.y1=input.nextInt();
+					graphList.add(tmpLine);
+					index++;
+				}
+				else if(type.equals("Oval")) {
+					GraphObject.Oval tmpOval = new GraphObject.Oval();
+					tmpOval.x=input.nextInt();
+					tmpOval.y=input.nextInt();
+					tmpOval.w=input.nextInt();
+					tmpOval.h=input.nextInt();
+					graphList.add(tmpOval);
+					index++;
+				}
+				else if(type.equals("Rectangle")){
+					GraphObject.Rectangle tmpRect= new GraphObject.Rectangle();
+					tmpRect.x=input.nextInt();
+					tmpRect.y=input.nextInt();
+					tmpRect.w=input.nextInt();
+					tmpRect.h=input.nextInt();
+					graphList.add(tmpRect);
+					index++;
+				}
+				else if(type.equals("InputString")){
+					GraphObject.InputString tmpInputString = new GraphObject.InputString();
+					tmpInputString.x=input.nextInt();
+					tmpInputString.y=input.nextInt();
+					tmpInputString.inputString=input.nextLine();
+					graphList.add(tmpInputString);
+					index++;
+				}
+			}
+			repaint();
+			super.requestFocus();
+		}
+		catch(IOException ex)
+		{
+			JOptionPane.showMessageDialog(getParent(),
+					"Error:Cannot read this file!" ,
+					"Error!", 
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	public void saveFile(File f) {
+		try{
+			PrintWriter output = new PrintWriter(f);
+			for(GraphObject item:graphList){
+				if(item instanceof GraphObject.Line){
+					output.print("Line ");
+					output.print(((GraphObject.Line) item).x0);output.print(' ');
+					output.print(((GraphObject.Line) item).y0);output.print(' ');
+					output.print(((GraphObject.Line) item).x1);output.print(' ');
+					output.println(((GraphObject.Line) item).y1);
+				}
+				else if(item instanceof GraphObject.Oval) {
+					output.print("Oval ");
+					output.print(((GraphObject.Oval) item).x);output.print(' ');
+					output.print(((GraphObject.Oval) item).y);output.print(' ');
+					output.print(((GraphObject.Oval) item).w);output.print(' ');
+					output.println(((GraphObject.Oval) item).h);
+				}
+				else if (item instanceof GraphObject.Rectangle) {
+					output.print("Rectangle ");
+					output.print(((GraphObject.Rectangle) item).x);output.print(' ');
+					output.print(((GraphObject.Rectangle) item).y);output.print(' ');
+					output.print(((GraphObject.Rectangle) item).w);output.print(' ');
+					output.println(((GraphObject.Rectangle) item).h);
+				}
+				else if(item instanceof GraphObject.InputString){
+					output.print("InputString ");
+					output.print(((GraphObject.InputString) item).x);output.print(' ');
+					output.print(((GraphObject.InputString) item).y);output.print(' ');
+					output.println(((GraphObject.InputString) item).inputString);
+				}
+			}
+			output.close();
+		}
+		catch(IOException ex)
+		{
+			JOptionPane.showMessageDialog(getParent(),
+					"Error:Cannot save this file!" ,
+					"Error!", 
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }
+

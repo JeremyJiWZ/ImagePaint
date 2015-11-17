@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 public class MainWindow extends JFrame{
 	public MainWindow()
 	{
-		MenuHolder mainMenu = new MenuHolder();
 		PaintPanel mainPanel = new PaintPanel();
+		MenuHolder mainMenu = new MenuHolder(mainPanel);
 		IconManager icons = new IconManager(mainPanel);
 		
 		BorderLayout mainLayout = new BorderLayout();
