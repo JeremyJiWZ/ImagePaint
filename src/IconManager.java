@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -10,24 +12,19 @@ import javax.swing.JPanel;
 public class IconManager extends JPanel{
 	int status = 0;//denotes which button has been pressed 0~4 for arrow, line, circle, rect, text
 	PaintPanel mainPaint;
+	JButton arrow = new JButton();
+	JButton line = new JButton();
+	JButton circle = new JButton();
+	JButton rect = new JButton();
+	JButton text = new JButton();
 	IconManager(PaintPanel p){
-		JButton arrow = new JButton();
-		JButton line = new JButton();
-		JButton circle = new JButton();
-		JButton rect = new JButton();
-		JButton text = new JButton();
+		
 		
 		arrow.setIcon(new ImageIcon("arrow.png"));
 		line.setIcon(new ImageIcon("line.png"));
 		circle.setIcon(new ImageIcon("circle.png"));
 		rect.setIcon(new ImageIcon("rect.png"));
 		text.setIcon(new ImageIcon("text.png"));
-		
-		arrow.setBackground(Color.gray);
-		line.setBackground(Color.gray);
-		circle.setBackground(Color.gray);
-		rect.setBackground(Color.gray);
-		text.setBackground(Color.gray);
 		
 		arrow.addActionListener(new ArrowListener());
 		line.addActionListener(new LineListener());
@@ -46,13 +43,13 @@ public class IconManager extends JPanel{
 		add(text);
 	}
 	
-	
 	class ArrowListener implements ActionListener
 	{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			status = 0;
 			mainPaint.setOption(status);
+			mainPaint.requestFocus();
 		}
 	}
 	class LineListener implements ActionListener
@@ -85,6 +82,7 @@ public class IconManager extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			status = 4;
 			mainPaint.setOption(status);
+			mainPaint.requestFocus();
 		}
 	}
 }

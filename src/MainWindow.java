@@ -11,20 +11,21 @@ public class MainWindow extends JFrame{
 		
 		BorderLayout mainLayout = new BorderLayout();
 		
-		
-		
 		add(mainMenu,BorderLayout.NORTH);
 		add(mainPanel,BorderLayout.CENTER);
 		add(icons,BorderLayout.WEST);
+		
+		setSize(800, 600);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setTitle("Image Paint");
+		mainPanel.setFocusable(true);
 	}
 	
 	
 	public static void main(String[] arvs)
 	{
 		MainWindow imagePaint = new MainWindow();
-		imagePaint.setSize(800, 600);
-		imagePaint.setVisible(true);
-		imagePaint.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		imagePaint.setTitle("Image Paint");
 	}
 }
