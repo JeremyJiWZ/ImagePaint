@@ -21,7 +21,8 @@ public class PaintPanel extends JPanel {
 	int status = 0;//initial status is 0, after first click is 1, after second click is 0
 	int index = 0;//point to the current item which is being painted
 	int indexSelected = -1;//denotes the object being selected
-	
+	Color thisColor = Color.BLACK;
+	Color backGround = Color.PINK;
 	//ctor
 	PaintPanel()
 	{
@@ -45,7 +46,7 @@ public class PaintPanel extends JPanel {
 			if (i==indexSelected)
 				g.setColor(Color.BLUE);
 			else
-				g.setColor(Color.BLACK);
+				g.setColor(thisColor);
 			graphList.get(i).draws(g);
 		}
 	}
@@ -215,6 +216,13 @@ public class PaintPanel extends JPanel {
 	public void setStatus(int statusIn)
 	{
 		status=statusIn;
+	}
+	public void setColor(Color c)
+	{
+		thisColor=c;
+	}
+	public void setBackground(Color c) {
+		super.setBackground(c);
 	}
 	public void openFile(File f) {
 		try{

@@ -4,9 +4,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 
 public class IconManager extends JPanel{
@@ -17,20 +19,28 @@ public class IconManager extends JPanel{
 	JButton circle = new JButton();
 	JButton rect = new JButton();
 	JButton text = new JButton();
+	JButton chooser = new JButton();
+	JButton background = new JButton();
 	IconManager(PaintPanel p){
-		
 		
 		arrow.setIcon(new ImageIcon("arrow.png"));
 		line.setIcon(new ImageIcon("line.png"));
 		circle.setIcon(new ImageIcon("circle.png"));
 		rect.setIcon(new ImageIcon("rect.png"));
 		text.setIcon(new ImageIcon("text.png"));
+		chooser.setIcon(new ImageIcon("foreground.png"));
+		background.setIcon(new ImageIcon("background.png"));
 		
 		arrow.addActionListener(new ArrowListener());
 		line.addActionListener(new LineListener());
 		circle.addActionListener(new CircleListener());
 		rect.addActionListener(new RectListener());
 		text.addActionListener(new TextListener());
+		chooser.addActionListener(new ColorChooseListener());
+		background.addActionListener(new BackGroundChooser());
+		
+		chooser.setToolTipText("set the graph's color");
+		background.setToolTipText("set the background color");
 		
 		mainPaint = p;
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -41,6 +51,8 @@ public class IconManager extends JPanel{
 		add(circle);
 		add(rect);
 		add(text);
+		add(chooser);
+		add(background);
 	}
 	
 	class ArrowListener implements ActionListener
@@ -84,5 +96,19 @@ public class IconManager extends JPanel{
 			mainPaint.setOption(status);
 			mainPaint.requestFocus();
 		}
+	}
+	class ColorChooseListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mainPaint.setColor(JColorChooser.showDialog(mainPaint, "Color", Color.black));
+		}
+	}
+	class BackGroundChooser implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mainPaint.setBackground(JColorChooser.showDialog(mainPaint, "Background", Color.PINK));
+		}
+		
 	}
 }

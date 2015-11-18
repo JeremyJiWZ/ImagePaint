@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>manifest.mf</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/manifest.mf</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
